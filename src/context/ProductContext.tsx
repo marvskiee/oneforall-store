@@ -13,6 +13,8 @@ interface ProductProviderProps {
 }
 
 interface ProductContext {
+    selectedProduct: string,
+    setModalProduct: (id: string) => void,
     searchProduct: (product_name: string) => void,
     clearSearch: () => void,
     productFilter: (sortBy: ProductFilter) => void,
@@ -23,7 +25,7 @@ interface ProductContext {
     search: string
 }
 
-// create conxtex
+// create context
 const ProductContext = createContext({} as ProductContext)
 
 export const useProduct = () => {
@@ -35,7 +37,7 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
     const [search, setSearch] = useState<string>("")
     const productsRef = useRef<Item[]>([])
     const [categories, setCategories] = useState<string[]>([])
-
+    const [selectedProduct, setSelectedProduct] = useState<string>("")
     useEffect(() => {
         const load = async () => {
             const response = await fetch('items.json');
@@ -102,9 +104,14 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
         }
 
     }
+    const setModalProduct = (id: string) => {
+        setSelectedProduct(id)
+    }
     return (
         <ProductContext.Provider
             value={{
+                selectedProduct,
+                setModalProduct,
                 searchProduct,
                 clearSearch,
                 productFilter,

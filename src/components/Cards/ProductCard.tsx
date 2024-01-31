@@ -1,6 +1,8 @@
 import { Item } from '../../interfaces/storeInterfaces'
 import { useShoppingCart } from '../../context/CartContext'
 import usePriceFormatter from '../../hooks/usePriceFormatter'
+import { IoIosMore } from "react-icons/io";
+import { useProduct } from '../../context/ProductContext';
 
 interface productCardProps {
   data: Item
@@ -10,6 +12,7 @@ const ProductCard = (props: productCardProps) => {
   const { formatAmount } = usePriceFormatter();
   const { id, productName, category, description, unitPrice, imageUrl } = props.data
   const { increaseCartQuantity } = useShoppingCart();
+  const { setModalProduct } = useProduct()
   return (
     <div className='w-full p-2 rounded-md border flex md:flex-row flex-col items-start gap-2'>
       <img src={imageUrl} className='aspect-square w-[10rem] object-contain' />
@@ -22,9 +25,15 @@ const ProductCard = (props: productCardProps) => {
           {/* <p>{description}</p> */}
           <p>{formatAmount(unitPrice)}</p>
         </div>
-        <button
-          className='w-full bg-violet-800 text-white rounded-md font-semibold p-2 px-4'
-          onClick={() => increaseCartQuantity(id)}>Add to Cart</button>
+        <div className='flex gap-2'>
+          <button
+            className=' bg-gray-200 rounded-md font-semibold p-2 px-4'
+            onClick={() => setModalProduct(id)}><IoIosMore />
+          </button>
+          <button
+            className='w-full text-sm bg-violet-800 text-white rounded-md font-semibold p-2 px-4'
+            onClick={() => increaseCartQuantity(id)}>Add to Cart</button>
+        </div>
       </div>
     </div>
   )

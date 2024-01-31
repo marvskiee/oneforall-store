@@ -1,9 +1,10 @@
 import { NavbarSection, ProductSection, CategorySection, FilterSection, CartModal, CheckoutModal } from '../components'
+import ItemModal from '../components/Modals/ItemModal'
 import { useShoppingCart } from '../context/CartContext'
 import { useProduct } from '../context/ProductContext'
 
 const Home = () => {
-    const { search } = useProduct()
+    const { search, selectedProduct } = useProduct()
     const { checkOutModal, finishModal } = useShoppingCart()
     return (
         <div>
@@ -26,8 +27,10 @@ const Home = () => {
                     </div>
                 </div>
             }
+            {/* Modals  */}
             {checkOutModal && <CartModal />}
             {finishModal && <CheckoutModal />}
+            {selectedProduct ? <ItemModal data={selectedProduct} /> : ""}
 
         </div>
     )
