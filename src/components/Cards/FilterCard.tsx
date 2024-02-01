@@ -6,10 +6,8 @@ interface FilterCardProps {
 }
 
 const FilterCard = (props: FilterCardProps) => {
-    const { productFilter } = useProduct()
-
     return (
-        <button key={props?.index} onClick={() => productFilter(props.index)}>{props?.data}</button>
+        <option className='p-4'>{props?.data}</option>
     )
 }
 
